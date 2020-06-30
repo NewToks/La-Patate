@@ -47,8 +47,7 @@ client.on(`message`, async message => {
     let commandFile = client.commands.get(cmd.slice(prefix.length));
     if(commandFile) commandFile.run(client, message, Args, args)
 })
-       
-}
+      
 let stats = {
     serverID : '727480606685921300',
     total : '727563379643777135',
