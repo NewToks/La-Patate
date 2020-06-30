@@ -33,7 +33,7 @@ fs.readdir('./events/' , (err , f) =>{
     })
 })
 
-client.login(config.token)
+client.login(config.Token)
 
 client.on(`message`, async message => {
     client.emit('checkMessage', message);
