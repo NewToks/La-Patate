@@ -35,14 +35,6 @@ fs.readdir('./events/' , (err , f) =>{
 
 client.login(config.token)
 
-client.on("guildMemberAdd" , member =>{
-    member.guild.channels.cache.find(channel => channel.id === "725366058722131979").send(`Salut ${member} bienvenue sur le serveur !`)
-})
-
-client.on("guildMemberRemove" , member =>{
-    member.guild.channels.cache.find(channel => channel.id === "725366058722131979").send(`${member} s'est barré avec un autre :pleading_face: le serveur est pas assez bien pour toi, c'est ca ? :rage:`)
-})
-
 client.on(`message`, async message => {
     client.emit('checkMessage', message);
 
@@ -54,6 +46,30 @@ client.on(`message`, async message => {
 
     let commandFile = client.commands.get(cmd.slice(prefix.length));
     if(commandFile) commandFile.run(client, message, Args, args)
+})
+
+let stats = {
+    serverID : '727480606685921300',
+    total : '727563379643777135',
+    member : '727563479157964971',
+    bots : '727563556261986407'
+}
+
+
+client.on("guildMemberAdd" , member =>{
+    if(member.guild.id !== stats.serverID) return;
+    client.channels.cache.get(stats.total).setName(`Total : ${member.guild.memberCount}`)
+    client.channels.cache.get(stats.member).setName(`Humains : ${member.guild.members.cache.filter(m => !m.user.bot).size}`)
+    client.channels.cache.get(stats.bots).setName(`Bots : ${member.guild.members.cache.filter(m => m.user.bot).size}`)
+    member.guild.channels.cache.find(channel => channel.id === "727480606685921303").send(`${member} arrive sur le serveur`)
+})
+
+client.on("guildMemberRemove" , member =>{
+    if(member.guild.id !== stats.serverID) return;
+    client.channels.cache.get(stats.total).setName(`Total : ${member.guild.memberCount}`)
+    client.channels.cache.get(stats.member).setName(`Humains : ${member.guild.members.cache.filter(m => !m.user.bot).size}`)
+    client.channels.cache.get(stats.bots).setName(`Bots : ${member.guild.members.cache.filter(m => m.user.bot).size}`)
+    member.guild.channels.cache.find(channel => channel.id === "727480606685921303").send(`S${member} quitte le serveur`)
 })
 
     
