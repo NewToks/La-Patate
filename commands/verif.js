@@ -15,6 +15,7 @@ module.exports.run = async (client , message, args) =>{
     message.channel.send(codes_embed).then(async message =>{
         message.react("727564492833030216")
     })
+}
 
 module.exports.help = {
     name : "verif"
