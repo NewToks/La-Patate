@@ -4,7 +4,7 @@ const fs = require("fs")
 client.commands = new Discord.Collection()
 const prefix = "."
 
-const config = require("./config.json")
+const config = require("./config2.json")
 
 fs.readdir('./commands/' , (err, f) => {
     if(err) console.log(err);
