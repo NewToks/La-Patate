@@ -72,5 +72,28 @@ client.on("guildMemberRemove" , member =>{
     member.guild.channels.cache.find(channel => channel.id === "727480606685921303").send(`S${member} quitte le serveur`)
 })
 
+client.on('messageReactionAdd' , (reaction , user) =>{
+    if(user.bot) return;
+    let role = reaction.message.guild.roles.cache.find(x => x.name === "GTA");
+    var member = reaction.message.guild.members.cache.find(member => member.id === user.id)
+
+    member.roles.add(role.id)
+    member.createDM().then(channel =>{
+        channel.send(`**Le role ${role.name} t'a été ajouté**`)
+    });
+})
+
+client.on('messageReactionRemove' , (reaction , user) =>{
+    if(user.bot) return;
+    var roleName = reaction.emoji.name
+    var role = reaction.message.guild.roles.cache.find(role => role.name.toLocaleLowerCase() === roleName.toLocaleLowerCase());
+    var member = reaction.message.guild.members.cache.find(member => member.id === user.id)
+
+    member.roles.remove(role.id)
+    member.createDM().then(channel =>{
+        channel.send(`**Le role ${role.name} t'a été retiré**`)
+    });
+})
+
     
 
