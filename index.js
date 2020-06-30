@@ -47,7 +47,8 @@ client.on(`message`, async message => {
     let commandFile = client.commands.get(cmd.slice(prefix.length));
     if(commandFile) commandFile.run(client, message, Args, args)
 })
-
+       
+}
 let stats = {
     serverID : '727480606685921300',
     total : '727563379643777135',
@@ -55,21 +56,32 @@ let stats = {
     bots : '727563556261986407'
 }
 
-
 client.on("guildMemberAdd" , member =>{
+    var hall_embed = new Discord.MessageEmbed()
+        .setColor("7289DA")
+        .setTitle("**__BIENVENUE__**")
+        .setDescription(`Salut ${member} bienvenue`)
+        .setTimestamp()
+        .setFooter("Created By NewToks#8330")
     if(member.guild.id !== stats.serverID) return;
     client.channels.cache.get(stats.total).setName(`Total : ${member.guild.memberCount}`)
     client.channels.cache.get(stats.member).setName(`Humains : ${member.guild.members.cache.filter(m => !m.user.bot).size}`)
     client.channels.cache.get(stats.bots).setName(`Bots : ${member.guild.members.cache.filter(m => m.user.bot).size}`)
-    member.guild.channels.cache.find(channel => channel.id === "727480606685921303").send(`${member} arrive sur le serveur`)
+    member.guild.channels.cache.find(channel => channel.id === "727480606685921303").send(hall_embed)
 })
 
 client.on("guildMemberRemove" , member =>{
+    var hall2_embed = new Discord.MessageEmbed()
+        .setColor("7289DA")
+        .setTitle("**__AU REVOIR__**")
+        .setDescription(`${member} est parti(e)`)
+        .setTimestamp()
+        .setFooter("Created By NewToks#8330")
     if(member.guild.id !== stats.serverID) return;
     client.channels.cache.get(stats.total).setName(`Total : ${member.guild.memberCount}`)
     client.channels.cache.get(stats.member).setName(`Humains : ${member.guild.members.cache.filter(m => !m.user.bot).size}`)
     client.channels.cache.get(stats.bots).setName(`Bots : ${member.guild.members.cache.filter(m => m.user.bot).size}`)
-    member.guild.channels.cache.find(channel => channel.id === "727480606685921303").send(`S${member} quitte le serveur`)
+    member.guild.channels.cache.find(channel => channel.id === "727480606685921303").send(hall2_embed)
 })
 
 client.on('messageReactionAdd' , (reaction , user) =>{
